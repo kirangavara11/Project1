@@ -1,24 +1,36 @@
 .homepage {
-  text-align: center;
   font-family: Arial, sans-serif;
   background: linear-gradient(to right, #e0eafc, #cfdef3);
   min-height: 100vh;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  padding-top: 64px;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
-
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+.qa-area::-webkit-scrollbar {
+  display: none;
+}
+.history-sidebar::-webkit-scrollbar {
+  display: none;
+}
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 0 24px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
-  background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
-
-.nav-buttons {
-  display: flex;
-  gap: 12px;
 }
 
 .logo {
@@ -26,10 +38,10 @@
   align-items: center;
 }
 
-.icon {
-  width: 36px;
-  height: 36px;
-  margin-right: 12px;
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  padding-right: 30px;
 }
 
 .app-name {
@@ -39,64 +51,28 @@
 }
 
 .app-name1 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #1976d2;
 }
 
-.main-content {
-  max-width: 900px;
-  margin: 20px auto 0 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 40px 24px;
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 12px;
-}
-
-.file-uploader {
-  border: 2px dashed #90caf9;
-  padding: 32px 0;
-  margin: 24px 0;
-  border-radius: 10px;
-  background: #f4faff;
-}
-
-.file-uploader p {
-  margin: 10px 0 0 0;
-  color: #1976d2;
-}
-
-.search-bar {
-  margin-top: 16px;
-}
-
-.uploaded-file-info {
-  margin-top: 10px;
-  color: #1976d2;
-  font-size: 1rem;
-  word-break: break-all;
-}
-
-.content-layout {
-  display: flex;
-  flex-direction: row;
-  min-height: 80vh;
-}
-
+/* Fixed sidebar */
 .history-sidebar {
-  width: 400px;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 320px;
+  height: calc(100vh - 64px); /* Full height under navbar */
   background: #fff;
   border-right: 1px solid #e0e0e0;
   padding: 24px 16px;
   box-sizing: border-box;
-  margin: 20px 20px 0 20px;
-  border-radius: 12px;
+  border-radius: 0 12px 12px 0;
+  overflow-y: auto;
+  z-index: 999;
+  min-width: 220px;
 }
+
 
 .history-sidebar h3 {
   margin-top: 0;
@@ -108,6 +84,7 @@ h1 {
   list-style: none;
   padding-left: 0;
   margin: 0;
+  padding-top: 10px;
 }
 
 .history-list li {
@@ -124,8 +101,138 @@ h1 {
   font-size: 0.96rem;
 }
 
-.main-content {
-  flex: 1;
-  padding: 32px;
+.content-layout {
+  margin-left: 320px;
+  height: calc(100vh - 104px);
+  display: flex;
+  flex-direction: row;
+  position: relative;
 }
 
+.main-content {
+  flex: 1;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 12px 0 0 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 40px 24px 10px 24px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: calc(100vh - 64px - 72px); /* 72px = search bar height + padding */
+  overflow-y: auto;
+  position: relative;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+/* Q&A Area */
+.qa-area {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  width: 100%;
+  margin-bottom: 12px;
+  padding-right: 8px;
+}
+
+/* Fixed search bar at bottom of viewport */
+.search-bar-container {
+  position: fixed;
+  left: 320px; /* Same as sidebar width */
+  bottom: 0;
+  width: 900px;
+  background: #fff;
+  z-index: 1100;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.03);
+  border-radius: 0 0 12px 0;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 700px;
+}
+
+.search-bar .MuiTextField-root {
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .history-sidebar {
+    width: 180px;
+    min-width: 120px;
+    padding: 12px 4px;
+    height: calc(100vh - 64px - 72px);
+  }
+  .content-layout {
+    margin-left: 180px;
+  }
+  .main-content {
+    max-width: 100%;
+    border-radius: 0;
+    padding: 24px 4px 24px 4px;
+    height: calc(100vh - 64px - 72px);
+  }
+  .search-bar-container {
+    left: 180px;
+    width: calc(100% - 180px);
+    border-radius: 0 0 12px 0;
+    padding: 12px 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .history-sidebar {
+    display: none;
+  }
+  .content-layout {
+    margin-left: 0;
+  }
+  .main-content {
+    border-radius: 0;
+    padding: 24px 4px 24px 4px;
+    height: calc(100vh - 64px - 72px);
+  }
+  .search-bar-container {
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
+    padding: 12px 4px;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-name, .app-name1 {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+  }
+  .sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  width: 100%;
+  white-space: nowrap; 
+}
+
+ .new-chat-btn {
+   margin-left: 8px; 
+}
+.active-nav-btn {
+  border-bottom: 1rem solid #1976d2;
+  border-radius: 0; 
+  transition: border-bottom 10s;
+}
+
+}
