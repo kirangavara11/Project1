@@ -12,6 +12,10 @@ function HomePage() {
   const [queryType, setQueryType] = useState('');
   const [selectedState, setSelectedState] = useState<"Delaware" | "Florida" | "">("");
   const [selectedFeature, setSelectedFeature] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,6 +27,12 @@ function HomePage() {
     "Reverse Lookup from User Story to Epic"
   ];
   const states = ["Delaware", "Florida"];
+
+  const categories: Record<"Delaware" | "Florida", string> = {
+  Delaware: "DFS-DE",
+  Florida: "DFS-FL"
+};
+
   const features = {
     Delaware: [
       "Standard Complaint Report",
@@ -101,53 +111,70 @@ function HomePage() {
         {/* Main Content */}
         <div className="main-content">
           {/* Dropdowns */}
-          <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
-            {/* Query Types Dropdown */}
-            <FormControl variant="outlined" sx={{ minWidth: 240 }}>
-              <InputLabel>Query Type</InputLabel>
-              <Select
-                value={queryType}
-                onChange={e => setQueryType(e.target.value)}
-                label="Query Type"
-              >
-                {queryTypes.map((qt) => (
-                  <MenuItem key={qt} value={qt}>{qt}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <div className="dropdown-row">
+          <FormControl variant="outlined" sx={{ minWidth: 240 }}>
+            <InputLabel>Query Type</InputLabel>
+            <Select
+              value={queryType}
+              onChange={e => setQueryType(e.target.value)}
+              label="Query Type"
+            >
+              {queryTypes.map((qt) => (
+                <MenuItem key={qt} value={qt}>{qt}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            {/* State Dropdown */}
-            <FormControl variant="outlined" sx={{ minWidth: 140 }}>
-              <InputLabel>State</InputLabel>
-              <Select
-                value={selectedState}
-                onChange={e => {
-                  setSelectedState(e.target.value);
-                  setSelectedFeature(''); // Reset feature when state changes
-                }}
-                label="State"
-              >
-                {states.map((state) => (
-                  <MenuItem key={state} value={state}>{state}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          {/* State Dropdown */}
+          <FormControl variant="outlined" sx={{ minWidth: 140 }}>
+            <InputLabel>State</InputLabel>
+            <Select
+              value={selectedState}
+              onChange={e => {
+                setSelectedState(e.target.value as "Delaware" | "Florida" | "");
+                setSelectedFeature(''); // Reset feature when state changes
+                setSelectedCategory(''); // Reset category when state changes
+              }}
+              label="State"
+            >
+              {states.map((state) => (
+                <MenuItem key={state} value={state}>{state}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            {/* Feature Dropdown */}
-            <FormControl variant="outlined" sx={{ minWidth: 240 }}>
-              <InputLabel>Feature</InputLabel>
-              <Select
-                value={selectedFeature}
-                onChange={e => setSelectedFeature(e.target.value)}
-                label="Feature"
-                disabled={!selectedState}
-              >
-                {(selectedState && features[selectedState] || []).map(feature => (
-                  <MenuItem key={feature} value={feature}>{feature}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
+          {/* Category Dropdown */}
+          <FormControl variant="outlined" sx={{ minWidth: 140 }}>
+            <InputLabel>Category</InputLabel>
+            <Select
+              value={selectedCategory}
+              onChange={e => setSelectedCategory(e.target.value)}
+              label="Category"
+              disabled={!selectedState}
+            >
+              {selectedState && (
+                <MenuItem value={categories[selectedState]}>{categories[selectedState]}</MenuItem>
+              )}
+            </Select>
+          </FormControl>
+
+          {/* Feature Dropdown */}
+          <FormControl variant="outlined" sx={{ minWidth: 240 }}>
+            <InputLabel>Feature</InputLabel>
+            <Select
+              value={selectedFeature}
+              onChange={e => setSelectedFeature(e.target.value)}
+              label="Feature"
+              disabled={!selectedState}
+            >
+              {(selectedState && features[selectedState] || []).map(feature => (
+                <MenuItem key={feature} value={feature}>{feature}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+
+
 
           <h1>Converse with your documents</h1>
           <p>
