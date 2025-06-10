@@ -21,7 +21,8 @@ import AboutUs from './AboutUs';
 function HomePage() {
   const [question, setQuestion] = useState('');
   const [history, setHistory] = useState<string[]>([]);
-  const [queryType, setQueryType] = useState('');
+  const [selectedData, setSelectedData] = useState('');
+  const [selectedEpic, setSelectedEpic] = useState('');
   const [selectedState, setSelectedState] = useState<"Delaware" | "Florida" | "">("");
   const [selectedFeature, setSelectedFeature] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -37,11 +38,13 @@ function HomePage() {
   const SIDEBAR_WIDTH = isXs ? 0 : isSm ? 180 : 320;
 
   // Dropdown data
-  const queryTypes = [
-    "Compare all User Stories between Delaware and Florida",
-    "Fetch User Stories from a specific Feature",
-    "Reverse Lookup from User Story to Epic"
+  const Data = [
+    "GovConnect"
   ];
+  const Epic = [
+    "Intake"
+  ];
+
   const states = ["Delaware", "Florida"];
   const categories = {
     Delaware: "DFS-DE",
@@ -52,7 +55,7 @@ function HomePage() {
       "Standard Complaint Report",
       "Institutional Abuse Reports",
       "Family Report"
-    ],
+    ],                                                                                                                                                                                                                                                                                                                                                 
     Florida: [
       "Service Referral Intake",
       "Mandated reporter portal",
@@ -220,15 +223,25 @@ function HomePage() {
                 alignItems="center"
               >
                 <FormControl size="small" sx={{ minWidth: 140, maxWidth: 180 }}>
-                  <InputLabel>Query Type</InputLabel>
+                  <InputLabel>Data</InputLabel>
                   <Select
-                    value={queryType}
-                    onChange={e => setQueryType(e.target.value)}
-                    label="Query Type"
+                    value={selectedData}
+                    onChange={e => setSelectedData(e.target.value)}
+                    label="Data"
                   >
-                    {queryTypes.map((qt) => (
-                      <MenuItem key={qt} value={qt}>{qt}</MenuItem>
-                    ))}
+                    <MenuItem value="GovConnect">GovConnect</MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Epic Dropdown */}
+                <FormControl size="small" sx={{ minWidth: 140, maxWidth: 180 }}>
+                  <InputLabel>Epic</InputLabel>
+                  <Select
+                    value={selectedEpic}
+                    onChange={e => setSelectedEpic(e.target.value)}
+                    label="Epic"
+                  >
+                    <MenuItem value="Intake">Intake</MenuItem>
                   </Select>
                 </FormControl>
 
