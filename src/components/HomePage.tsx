@@ -17,6 +17,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import AboutUs from './AboutUs';
+import InputFileUpload from './InputFileUpload';
 
 function HomePage() {
   const [question, setQuestion] = useState('');
@@ -297,6 +298,18 @@ function HomePage() {
               <Typography variant="body1" mb={2}>
                 Leverage AI-powered chat to summarize lengthy documents and simplify intricate PDFs.
               </Typography>
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <InputFileUpload />
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  // Add your logic for showing RFP templates here
+                  alert('Show RFP Templates clicked!');
+                }}
+              >
+                Show RFP Templates
+              </Button>
+            </Stack>
 
               {/* Q&A scrollable area */}
               <Stack spacing={2} sx={{ flex: 1, overflowY: 'auto', mb: 2 }}>
